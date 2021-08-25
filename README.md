@@ -66,6 +66,7 @@ Full list of options in `config.json`:
 | break_at_end_lsn                    | Boolean | No         | Stop running the tap if the newly received lsn is after the max lsn that was detected when the tap started. (Default: true) |
 | max_run_seconds                     | Integer | No         | Stop running the tap after certain number of seconds. (Default: 43200) |
 | debug_lsn                           | String  | No         | If set to `"true"` then add `_sdc_lsn` property to the singer messages to debug postgres LSN position in the WAL stream. (Default: None) |
+| refresh_schema                      | Boolean | No         | Refresh the streams schema during the sync. Set to `false` if using a custom catalog. (Default: true) |
 
 
 ### Run the tap in Discovery Mode

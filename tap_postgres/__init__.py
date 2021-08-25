@@ -420,7 +420,7 @@ def main_impl():
         state_file = args.state_file
         do_sync(conn_config, args.catalog.to_dict() if args.catalog else args.properties,
                 args.config.get('default_replication_method'), state, state_file,
-                args.config.get('refresh_schema'))
+                args.config.get('refresh_schema', True))
     else:
         LOGGER.info("No properties were selected")
 
