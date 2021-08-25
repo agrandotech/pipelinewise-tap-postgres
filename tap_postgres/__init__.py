@@ -271,7 +271,7 @@ def register_type_adapters(conn_config):
                         (enum_oid,), 'ENUM_{}[]'.format(enum_oid), psycopg2.STRING))
 
 
-def do_sync(conn_config, catalog, default_replication_method, state, state_file=None):
+def do_sync(conn_config, catalog, default_replication_method, state, state_file=None, refresh_schema=True):
     """
     Orchestrates sync of all streams
     """
@@ -286,7 +286,8 @@ def do_sync(conn_config, catalog, default_replication_method, state, state_file=
     else:
         end_lsn = None
 
-    refresh_streams_schema(conn_config, streams)
+    if refresh_schema:
+        refresh_streams_schema(conn_config, streams)
 
     sync_method_lookup, traditional_streams, logical_streams = \
         sync_method_for_streams(streams, state, default_replication_method)
@@ -418,7 +419,8 @@ def main_impl():
         state = args.state
         state_file = args.state_file
         do_sync(conn_config, args.catalog.to_dict() if args.catalog else args.properties,
-                args.config.get('default_replication_method'), state, state_file)
+                args.config.get('default_replication_method'), state, state_file,
+                args.config.get('refresh_schema'))
     else:
         LOGGER.info("No properties were selected")
 
